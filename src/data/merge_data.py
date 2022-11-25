@@ -24,7 +24,7 @@ class MergeData:
             df_json_temp = pd.read_json(path)
             df_json = pd.concat([df_json, df_json_temp], axis=0)
 
-        df_json['content'] = df_json['Content'].apply(lambda x: list(x.values()))
+        df_json['content'] = df_json['Content'].apply(lambda x: list(x.values())[0])
         df_json['index'] = df_json['ID']
         df_json = df_json.drop(['Content', 'ID'],axis=1)
 
@@ -33,7 +33,7 @@ class MergeData:
         df_okz = df_okz.drop(['control_number', 'description', 'code'], axis=1)
 
         df = df_json.merge(df_train, how='left', on='index')
-        df = df.merge(df_okz, on='target')
+        df = df.merge(df_okz, how='left', on='target')
 
         df = df.drop('name', axis=1)
         df['target'] = df['target'].fillna(-1.0)
