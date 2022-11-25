@@ -12,17 +12,29 @@ class MergeData:
         self.df_train = pd.read_csv(raw_data_path+'train.csv')
         self.df_json = pd.read_json(raw_data_path + 'vacancy_descriptions/1_parsed.json')
         self.json_paths = [raw_data_path + 'vacancy_descriptions/' + str(i) + '_parsed.json' for i in range(2, 6)]
+        self.df_okz = pd.read_csv(raw_data_path+'okz_3_4_professions.csv', sep='\t')
 
     def merge(self):
+
+        df_json = self.df_json.copy(deep=True)
+        df_okz = self.df_okz.copy(deep=True)
+        df_train = self.df_train.copy(deep=True)
+
         for path in self.json_paths:
             df_json_temp = pd.read_json(path)
-            self.df_json = pd.concat([self.df_json, df_json_temp], axis=0)
+            df_json = pd.concat([df_json, df_json_temp], axis=0)
 
-        self.df_json['content'] = self.df_json['Content'].apply(lambda x: list(x.values()))
-        self.df_json['index'] = self.df_json['ID'].rename('index')
-        self.df_json = self.df_json.drop(['Content', 'ID'],axis=1)
+        df_json['content'] = df_json['Content'].apply(lambda x: list(x.values()))
+        df_json['index'] = df_json['ID']
+        df_json = df_json.drop(['Content', 'ID'],axis=1)
 
-        df = self.df_json.merge(self.df_train, how='left', on='index')
+        df_okz['profession_desc'] = df_okz['description']
+        df_okz['target'] = df_okz['code']
+        df_okz = df_okz.drop(['control_number', 'description', 'code'], axis=1)
+
+        df = df_json.merge(df_train, how='left', on='index')
+        df = df.merge(df_okz, on='target')
+
         df = df.drop('name', axis=1)
         df['target'] = df['target'].fillna(-1.0)
         df['target'] = df['target'].astype(int)
