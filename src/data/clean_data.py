@@ -61,3 +61,13 @@ if __name__ == "__main__":
     labeled.to_csv('../../data/interim/labeled.csv', index=False)
     unlabeled.to_csv('../../data/interim/unlabeled.csv', index=False)
 
+    # okz = pd.read_csv('../../data/raw/okz_3_4_professions.csv', sep='\t')
+    # Cleaner = TextCleaning(tokenizer, stemmer, stop_words=stop_words)
+
+    # for col in ['profession', 'description']:
+    #     print(f"cleaning {col}")
+    #     cleaned = Cleaner.preprocessing(okz[col].astype(str))
+    #     okz[col] = [" ".join(data_) for data_ in cleaned]
+
+    # print("saving data")
+    # okz.to_csv('../../data/interim/okz.csv', index=False)
