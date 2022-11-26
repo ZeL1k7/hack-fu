@@ -46,8 +46,8 @@ class TextCleaning:
         return clean_data
 
 if __name__ == "__main__":
-    labeled = pd.read_csv('../../data/processed/labeled.csv')
-    unlabeled = pd.read_csv('../../data/processed/unlabeled.csv')
+    labeled = pd.read_csv('../../data/interim/labeled.csv')
+    unlabeled = pd.read_csv('../../data/interim/unlabeled.csv')
 
     Cleaner = TextCleaning(tokenizer, stemmer, stop_words=stop_words)
     for df in [labeled, unlabeled]:
@@ -58,6 +58,6 @@ if __name__ == "__main__":
             df[col] = [" ".join(data_) for data_ in cleaned]
 
     print("saving data")
-    labeled.to_csv('../../data/processed/labeled.csv', index=False)
-    unlabeled.to_csv('../../data/processed/unlabeled.csv', index=False)
+    labeled.to_csv('../../data/interim/labeled.csv', index=False)
+    unlabeled.to_csv('../../data/interim/unlabeled.csv', index=False)
 
