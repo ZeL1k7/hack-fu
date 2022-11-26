@@ -40,6 +40,7 @@ class MergeData:
         df['target'] = df['target'].astype(int)
         df['description'] = df['description'].astype(str)
         df['description'] = df['description'].apply(lambda x:  self.html_regexp.sub(r'', x))
+        df[['profession', 'profession_desc']] = df[['profession', 'profession_desc']].astype(str)
 
         df_labeled = df[df['target'] != -1].to_csv(self.output_data_path+'labeled.csv', index=False)
         df_unlabeled = df[df['target'] == -1].to_csv(self.output_data_path+'unlabeled.csv', index=False)
