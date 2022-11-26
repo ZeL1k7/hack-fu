@@ -25,8 +25,8 @@ class WordVec:
 
 
 if __name__ == "__main__":
-    data_labeled = pd.read_csv('/mnt/disk_d/hack-fu/data/interim/labeled.csv')
-    data_unlabeled = pd.read_csv('/mnt/disk_d/hack-fu/data/interim/unlabeled.csv')
+    data_labeled = pd.read_csv('../../data/interim/labeled.csv')
+    data_unlabeled = pd.read_csv('../../data/interim/unlabeled.csv')
     data_labeled = data_labeled.drop(['index', 'target'], axis=1).values.astype(str)
     data_unlabeled = data_unlabeled.drop(['index', 'target', 'profession', 'profession_desc'], axis=1).values.astype(str)
     data = np.append(data_unlabeled, data_labeled)
