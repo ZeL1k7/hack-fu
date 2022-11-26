@@ -7,7 +7,7 @@ class WordVec:
     def __init__(self):
         self.w2v_model = Word2Vec(
             min_count=10,
-            window=2,
+            window=5,
             vector_size=300,
             negative=10,
             alpha=0.03,
@@ -19,7 +19,7 @@ class WordVec:
     def train(self, vocab_data, train_data, save_model: bool = True):
         w2v_model = self.w2v_model
         w2v_model.build_vocab(vocab_data)
-        w2v_model.train(train_data, total_examples=w2v_model.corpus_count, epochs=2, report_delay=1)
+        w2v_model.train(train_data, total_examples=w2v_model.corpus_count, epochs=50, report_delay=1)
         if save_model:
             w2v_model.save("word2vec.model")
 
